@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'login.dart'; // Import the LoginPage
+import 'header.dart';
 
 class SignupPage extends StatefulWidget {
   @override
@@ -64,6 +65,7 @@ class _SignupPageState extends State<SignupPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: CommonHeader(),
       body: SingleChildScrollView(
         // Wrap the entire body in a SingleChildScrollView
         child: Container(
