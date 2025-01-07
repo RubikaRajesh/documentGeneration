@@ -29,8 +29,8 @@ class LoginPage extends StatelessWidget {
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              const Color.fromARGB(255, 46, 1, 54),
-              const Color.fromARGB(255, 148, 17, 124)
+              const Color.fromARGB(255, 21, 54, 90),
+              const Color.fromARGB(255, 11, 87, 173)
             ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,

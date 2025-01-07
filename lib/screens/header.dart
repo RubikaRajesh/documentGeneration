@@ -13,6 +13,7 @@ class CommonHeader extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      backgroundColor: Colors.black, // Set the background color to black
       title: Row(
         children: [
           Image.asset(
@@ -21,7 +22,9 @@ class CommonHeader extends StatelessWidget implements PreferredSizeWidget {
             width: 40,
           ),
           SizedBox(width: 10),
-          Text('SJCE-IT'),
+          Text('SJCE-IT',
+              style:
+                  TextStyle(color: Colors.white)), // Change text color to white
         ],
       ),
       actions: [
@@ -35,21 +38,21 @@ class CommonHeader extends StatelessWidget implements PreferredSizeWidget {
           },
           child: Text(
             'Home',
-            style: TextStyle(color: const Color.fromARGB(255, 0, 0, 0)),
+            style: TextStyle(color: Colors.white), // Change text color to white
           ),
         ),
         TextButton(
           onPressed: () {},
           child: Text(
             'Track',
-            style: TextStyle(color: const Color.fromARGB(255, 0, 0, 0)),
+            style: TextStyle(color: Colors.white), // Change text color to white
           ),
         ),
         TextButton(
           onPressed: () {},
           child: Text(
             'Apply OD',
-            style: TextStyle(color: const Color.fromARGB(255, 0, 0, 0)),
+            style: TextStyle(color: Colors.white), // Change text color to white
           ),
         ),
         TextButton(
@@ -61,7 +64,7 @@ class CommonHeader extends StatelessWidget implements PreferredSizeWidget {
           },
           child: Text(
             'Login',
-            style: TextStyle(color: const Color.fromARGB(255, 0, 0, 0)),
+            style: TextStyle(color: Colors.white), // Change text color to white
           ),
         ),
       ],
