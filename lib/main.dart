@@ -116,10 +116,39 @@
 //     );
 //   }
 // }
+// import 'package:flutter/material.dart';
+// import 'screens/home.dart'; // Import the HomePage
+// import 'screens/login.dart'; // Import the LoginPage
+// import 'screens/signup.dart'; // Import the SignupPage
+
+// void main() {
+//   runApp(MyApp());
+// }
+
+// class MyApp extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       debugShowCheckedModeBanner: false,
+//       title: 'SJCE-IT Portal',
+//       theme: ThemeData(
+//         primarySwatch: Colors.deepPurple,
+//       ),
+//       initialRoute: '/home', // Set initial route to HomePage
+//       routes: {
+//         '/home': (context) => HomePage(), // HomePage route
+//         '/': (context) => LoginPage(), // LoginPage route
+//         '/signup': (context) => SignupPage(), // SignupPage route
+//       },
+//     );
+//   }
+// }
+
 import 'package:flutter/material.dart';
 import 'screens/home.dart'; // Import the HomePage
 import 'screens/login.dart'; // Import the LoginPage
 import 'screens/signup.dart'; // Import the SignupPage
+import 'screens/od_form.dart'; // Import the OD Form widget
 
 void main() {
   runApp(MyApp());
@@ -139,6 +168,7 @@ class MyApp extends StatelessWidget {
         '/home': (context) => HomePage(), // HomePage route
         '/': (context) => LoginPage(), // LoginPage route
         '/signup': (context) => SignupPage(), // SignupPage route
+        '/od_form': (context) => OdFormPage(), // OD Form route
       },
     );
   }
