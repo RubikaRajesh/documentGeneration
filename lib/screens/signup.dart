@@ -15,50 +15,64 @@ class _SignupPageState extends State<SignupPage> {
   final TextEditingController yearController = TextEditingController();
   final TextEditingController sectionController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final TextEditingController confirmPasswordController =
-      TextEditingController();
+  final TextEditingController confirmPasswordController = TextEditingController();
 
-  final FocusNode nameFocusNode = FocusNode();
-  final FocusNode emailFocusNode = FocusNode();
-  final FocusNode departmentFocusNode = FocusNode();
-  final FocusNode yearFocusNode = FocusNode();
-  final FocusNode sectionFocusNode = FocusNode();
-  final FocusNode passwordFocusNode = FocusNode();
-  final FocusNode confirmPasswordFocusNode = FocusNode();
+  bool isLoading = false;
 
   Future<void> signup(BuildContext context) async {
     if (passwordController.text != confirmPasswordController.text) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Passwords do not match!')),
-      );
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Passwords do not match!')));
       return;
     }
 
     try {
+      setState(() => isLoading = true);
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: emailController.text,
         password: passwordController.text,
       );
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Signup Successful!')),
-      );
-      Navigator.pop(context); // Go back to the login page after signup
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Signup Successful!')));
+      Navigator.pop(context);
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(e.toString())),
-      );
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
+    } finally {
+      setState(() => isLoading = false);
     }
+  }
+
+  Widget buildTextField(String label, TextEditingController controller, {bool obscureText = false}) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(label, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+        TextField(
+          controller: controller,
+          obscureText: obscureText,
+          decoration: InputDecoration(
+            hintText: "Enter your $label",
+            prefixIcon: Icon(label == 'Password' ? Icons.lock : Icons.text_fields, color: Colors.blue),
+            filled: true,
+            fillColor: Colors.white.withOpacity(0.8),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: BorderSide.none,
+            ),
+          ),
+        ),
+        SizedBox(height: 20),
+      ],
+    );
   }
 
   @override
   void dispose() {
-    nameFocusNode.dispose();
-    emailFocusNode.dispose();
-    departmentFocusNode.dispose();
-    yearFocusNode.dispose();
-    sectionFocusNode.dispose();
-    passwordFocusNode.dispose();
-    confirmPasswordFocusNode.dispose();
+    nameController.dispose();
+    emailController.dispose();
+    departmentController.dispose();
+    yearController.dispose();
+    sectionController.dispose();
+    passwordController.dispose();
+    confirmPasswordController.dispose();
     super.dispose();
   }
 
@@ -67,7 +81,6 @@ class _SignupPageState extends State<SignupPage> {
     return Scaffold(
       appBar: CommonHeader(),
       body: SingleChildScrollView(
-        // Wrap the entire body in a SingleChildScrollView
         child: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
@@ -79,108 +92,43 @@ class _SignupPageState extends State<SignupPage> {
               end: Alignment.bottomRight,
             ),
           ),
-          child: Padding(
-            padding: const EdgeInsets.all(32.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Create an Account',
-                  style: TextStyle(
-                    fontSize: 32,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ),
-                SizedBox(height: 20),
-                buildLabel("Full Name"),
-                buildTextField(
-                    nameController, nameFocusNode, "Enter your full name"),
-                SizedBox(height: 20),
-                buildLabel("Email"),
-                buildTextField(emailController, emailFocusNode,
-                    "Enter your email address"),
-                SizedBox(height: 20),
-                buildLabel("Department"),
-                buildTextField(departmentController, departmentFocusNode,
-                    "Enter your department"),
-                SizedBox(height: 20),
-                buildLabel("Year"),
-                buildTextField(
-                    yearController, yearFocusNode, "Enter your year"),
-                SizedBox(height: 20),
-                buildLabel("Section"),
-                buildTextField(
-                    sectionController, sectionFocusNode, "Enter your section"),
-                SizedBox(height: 20),
-                buildLabel("Password"),
-                buildTextField(passwordController, passwordFocusNode,
-                    "Enter your password",
-                    obscureText: true),
-                SizedBox(height: 20),
-                buildLabel("Confirm Password"),
-                buildTextField(confirmPasswordController,
-                    confirmPasswordFocusNode, "Re-enter your password",
-                    obscureText: true),
-                SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: () => signup(context),
+          padding: const EdgeInsets.all(32.0),
+          child: Column(
+            children: [
+              Text('Create an Account', style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: Colors.white)),
+              SizedBox(height: 20),
+              buildTextField('Full Name', nameController),
+              buildTextField('Email', emailController),
+              buildTextField('Department', departmentController),
+              buildTextField('Year', yearController),
+              buildTextField('Section', sectionController),
+              buildTextField('Password', passwordController, obscureText: true),
+              buildTextField('Confirm Password', confirmPasswordController, obscureText: true),
+              SizedBox(height: 30),
+              Center(
+                child: ElevatedButton(
+                  onPressed: isLoading ? null : () => signup(context),
                   style: ElevatedButton.styleFrom(
                     padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                    backgroundColor: const Color.fromARGB(255, 0, 36, 82),
+                    foregroundColor: Colors.white,
                   ),
-                  child: Text("Signup", style: TextStyle(fontSize: 18)),
+                  child: isLoading ? CircularProgressIndicator(color: Colors.white) : Text("Signup", style: TextStyle(fontSize: 18)),
                 ),
-                SizedBox(height: 20),
-                TextButton(
+              ),
+              SizedBox(height: 20),
+              Center(
+                child: TextButton(
                   onPressed: () => Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(builder: (context) => LoginPage()),
                   ),
-                  child: Text(
-                    "Already have an account? Login",
-                    style: TextStyle(color: Colors.white),
-                  ),
+                  child: Text("Already have an account? Login", style: TextStyle(color: Colors.white)),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-        ),
-      ),
-    );
-  }
-
-  // Method to build a label for each input field
-  Widget buildLabel(String label) {
-    return Text(
-      label,
-      style: TextStyle(
-        fontSize: 18,
-        fontWeight: FontWeight.bold,
-        color: Colors.white,
-      ),
-    );
-  }
-
-  // Method to build each text field
-  Widget buildTextField(
-      TextEditingController controller, FocusNode focusNode, String hintText,
-      {bool obscureText = false}) {
-    return TextField(
-      controller: controller,
-      obscureText: obscureText,
-      focusNode: focusNode,
-      decoration: InputDecoration(
-        hintText: hintText,
-        hintStyle: TextStyle(color: const Color.fromARGB(255, 0, 0, 0)),
-        filled: true,
-        fillColor: Colors.white.withOpacity(0.8),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide.none,
         ),
       ),
     );
