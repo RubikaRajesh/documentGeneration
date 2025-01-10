@@ -166,8 +166,42 @@ class _OdTrackingPageState extends State<OdTrackingPage> {
               color: Colors.white.withOpacity(0.7),
             ),
           ),
+//         //   onTap: () {
+//         //     if (title == "Reached Teacher") {
+//         //       ScaffoldMessenger.of(context).showSnackBar(
+//         //         SnackBar(
+//         //           content: Text("The teacher will notice the OD soon!"),
+//         //           backgroundColor: Colors.green,
+//         //           ),
+//         //           );
+//         //         }
+//         // },
+//         onTap: () {
+//           if (title == "Reached Teacher") {
+//             showDialog(
+//               context: context,
+//               builder: (BuildContext context) {
+//               return AlertDialog(
+//               title: Text("Good News!"),
+//               content: Text("The teacher will notice the OD soon."),
+//               actions: [
+//                 TextButton(
+//                   onPressed: () {
+//                     Navigator.of(context).pop();
+//                     },
+//                     child: Text("OK"),
+//             ),
+//           ],
+//         );
+//       },
+//     );
+//   }
+// },
+
+
         ),
       ),
     );
   }
 }
+

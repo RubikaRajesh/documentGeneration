@@ -152,7 +152,8 @@
 
 import 'package:flutter/material.dart';
 import 'home.dart'; // Import your HomePage
-import 'login.dart'; // Import the LoginPage
+import 'login.dart';
+import 'profile.dart'; // Import the LoginPage
 import 'od_form.dart'; // Import the OD Form Page
 import 'track.dart'; // Import the Tracking Page
 
@@ -219,6 +220,19 @@ class CommonHeader extends StatelessWidget implements PreferredSizeWidget {
           },
           child: Text(
             'Apply OD',
+            style: TextStyle(color: Colors.white), // Change text color to white
+          ),
+        ),
+         TextButton(
+          onPressed: () {
+            // Navigate to the OD Form Page when "Apply OD" is clicked
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => ProfileForm()),
+            );
+          },
+          child: Text(
+            'Profile',
             style: TextStyle(color: Colors.white), // Change text color to white
           ),
         ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'header.dart'; // Assuming header.dart is where CommonHeader is located
+import 'header.dart'; 
+import 'profile.dart';// Assuming header.dart is where CommonHeader is located
 
 void main() {
   runApp(MyApp());
